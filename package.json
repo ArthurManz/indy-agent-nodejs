@@ -1,0 +1,35 @@
+{
+  "name": "indy-agent",
+  "version": "0.1.0",
+  "description": "This module allow to setup and agent did endpoint and to send message to other did endpoints (agents)",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArthurManz/npm-indy-agent.git"
+  },
+  "keywords": [
+    "indy",
+    "hyperdledger",
+    "sovrin",
+    "indy-agent"
+  ],
+  "author": "arturomanzaneda@gmail.com",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/ArthurManz/npm-indy-agent/issues"
+  },
+  "homepage": "https://github.com/ArthurManz/npm-indy-agent#readme",
+  "dependencies": {
+    "indy-sdk": "^1.6.1",
+    "mkdirp": "^0.5.1",
+    "request-promise": "^4.2.2",
+    "universal-dotenv": "^1.9.0",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "jest": "^23.5.0"
+  }
+}

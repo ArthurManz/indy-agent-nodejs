@@ -1,0 +1,132 @@
+version: '3'
+
+networks:
+    services:
+        ipam:
+            config:
+            - subnet: 172.17.0.0/24
+
+services:
+    #
+    # Pool
+    #
+    pool:
+        build:
+            context: .
+            dockerfile: indy-pool.dockerfile
+            args:
+            - pool_ip=172.17.0.100
+        ports:
+        - 9701-9708:9701-9708
+        networks:
+            services:
+                ipv4_address: 172.17.0.100
+    #
+    # Agents
+    #
+    alice:
+        image: indy-agentjs
+        command: 'bash -c ''npm start'''
+        environment:
+        - INDY_AGENT_PORT=3000
+        - INDY_AGENT_NAME=Alice
+        - INDY_AGENT_EMAIL=alice@faber.edu
+        - INDY_AGENT_PASSWORD=123
+        - INDY_AGENT_USERNAME=alice
+        - INDY_AGENT_PUBLIC_DID_ENDPOINT=172.17.0.150:3000
+        - DOCKERHOST=${DOCKERHOST}
+        - RUST_LOG=${RUST_LOG}
+        - TEST_POOL_IP=${TEST_POOL_IP}
+        ports:
+        - 3000:3000
+        depends_on:
+        - pool
+        networks:
+            services:
+                ipv4_address: 172.17.0.150
+
+    bob:
+        image: indy-agentjs
+        command: 'bash -c ''npm start'''
+        environment:
+        - INDY_AGENT_PORT=3001
+        - INDY_AGENT_NAME=Bob
+        - INDY_AGENT_EMAIL=bob@byu.edu
+        - INDY_AGENT_PASSWORD=123
+        - INDY_AGENT_USERNAME=bob
+        - INDY_AGENT_PUBLIC_DID_ENDPOINT=172.17.0.160:3001
+        - DOCKERHOST=${DOCKERHOST}
+        - RUST_LOG=${RUST_LOG}
+        - TEST_POOL_IP=${TEST_POOL_IP}
+        ports:
+        - 3001:3001
+        depends_on:
+        - pool
+        networks:
+            services:
+                ipv4_address: 172.17.0.160
+
+    faber:
+        image: indy-agentjs
+        command: 'bash -c ''npm start'''
+        environment:
+        - INDY_AGENT_PORT=3002
+        - INDY_AGENT_NAME=Faber University
+        - INDY_AGENT_EMAIL=admin@faber.edu
+        - INDY_AGENT_PASSWORD=123
+        - INDY_AGENT_USERNAME=faber
+        - INDY_AGENT_PUBLIC_DID_ENDPOINT=172.17.0.170:3002
+        - DOCKERHOST=${DOCKERHOST}
+        - RUST_LOG=${RUST_LOG}
+        - TEST_POOL_IP=${TEST_POOL_IP}
+        ports:
+        - 3002:3002
+        depends_on:
+        - pool
+        networks:
+            services:
+                ipv4_address: 172.17.0.170
+
+
+    acme:
+        image: indy-agentjs
+        command: 'bash -c ''npm start'''
+        environment:
+        - INDY_AGENT_PORT=3003
+        - INDY_AGENT_NAME=Acme Corporation
+        - INDY_AGENT_EMAIL=boss@acme.com
+        - INDY_AGENT_PASSWORD=123
+        - INDY_AGENT_USERNAME=acme
+        - INDY_AGENT_PUBLIC_DID_ENDPOINT=172.17.0.180:3003
+        - DOCKERHOST=${DOCKERHOST}
+        - RUST_LOG=${RUST_LOG}
+        - TEST_POOL_IP=${TEST_POOL_IP}
+        ports:
+        - 3003:3003
+        depends_on:
+        - pool
+        networks:
+            services:
+                ipv4_address: 172.17.0.180
+
+
+    thrift:
+        image: indy-agentjs
+        command: 'bash -c ''npm start'''
+        environment:
+        - INDY_AGENT_PORT=3004
+        - INDY_AGENT_NAME=Thrift Bank
+        - INDY_AGENT_EMAIL=owner@thrift.com
+        - INDY_AGENT_PASSWORD=123
+        - INDY_AGENT_USERNAME=thrift
+        - INDY_AGENT_PUBLIC_DID_ENDPOINT=172.17.0.190:3004
+        - DOCKERHOST=${DOCKERHOST}
+        - RUST_LOG=${RUST_LOG}
+        - TEST_POOL_IP=${TEST_POOL_IP}
+        ports:
+        - 3004:3004
+        depends_on:
+        - pool
+        networks:
+            services:
+                ipv4_address: 172.17.0.190
