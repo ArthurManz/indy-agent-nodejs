@@ -10,8 +10,8 @@ For more information please see the [agent-2-agent docs]
 
 ## Sample Application based on reference implementation
 
-> WIP: Show how to use this NPM module, implementing the existing
-NodeJS reference implementation
+See example directory to see how this module implements the existing
+NodeJS reference implementation of Indy-Agent repository
 
 <!-- Links -->
 [Indy-Agent]: (https://github.com/hyperledger/indy-agent)
